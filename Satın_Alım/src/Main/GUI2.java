@@ -151,7 +151,7 @@ public class GUI2 extends JFrame {
 					
 					Connection conn=Functions.getConnection();
 					Statement statement = conn.createStatement();
-					String query = "insert into islemler (companyid,companyname,tutar,username,tip,[not]) values ("+cid+",'"+cn+"',"+tt+",'"+un+"','"+tip+"','"+not+"')";
+					String query = "insert into islemler (companyid,tutar,username,[not],tipid) values ("+cid+","+tt+",'"+un+"','"+not+"',1)";
 					statement.executeUpdate(query);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -160,6 +160,9 @@ public class GUI2 extends JFrame {
 				
 			}
 		});
+		
+		
+		
 	}
 
 }

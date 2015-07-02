@@ -9,9 +9,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 
 import java.awt.FontFormatException;
 import java.awt.GridLayout;
@@ -21,6 +23,8 @@ import java.awt.Font;
 import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -33,6 +37,10 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 
 //import jxl.read.biff.BiffException;
+
+
+
+
 
 
 
@@ -164,7 +172,7 @@ public class GUI extends JFrame {
 					//Connection conn = DriverManager.getConnection(dbUrl,"sa","123456");
 					Connection conn = Functions.getConnection();
 					Statement statement = conn.createStatement();
-					String query = "select islemid,tarih,companyname,tutar,username,tip,[not],companyid from islemler";
+					String query = "select islemid,tarih,companyname,tutar,username,tip,[not],a.companyid from islemler a,company b,islemtipi c where a.companyid=b.companyid and a.tipid=c.tipid";
 					ResultSet rs = statement.executeQuery(query);
 					while(rs.next()){
 						//Islem ii=new Islem(Integer.parseInt(rs.getString("islemid")), rs.getString("tarih"), rs.getString("companyname"), Integer.parseInt(rs.getString("companyid")), Float.parseFloat(rs.getString("tutar")), rs.getString("username"), rs.getString("not"), rs.getString("tip"));
@@ -178,7 +186,7 @@ public class GUI extends JFrame {
 				
 			}
 		});
-btnNew.addActionListener(new ActionListener(){
+		btnNew.addActionListener(new ActionListener(){
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -192,6 +200,26 @@ btnNew.addActionListener(new ActionListener(){
 				
 			}
 		});
+		/*
+		table.addMouseListener(new MouseAdapter() {
+			   @Override
+			   public void mouseClicked(MouseEvent e) { //or mouseReleased(MouseEvent e)
+			       if (SwingUtilities.isRightMouseButton(e)) {
+			           //-- select a row
+			           int idx = table.rowAtPoint(e.getPoint());
+			           table.getSelectionModel().setSelectionInterval(idx, idx);
+			           //---
+			           codeModel.setSelectedFileName(table.getValueAt(table.getSelectedRow(), 0).toString());
+			           JPopupMenu popup = createRightClickPopUp();
+			           popup.show(e.getComponent(), e.getX(), e.getY());
+			       }else{
+			           codeModel.setSelectedFileName(table.getValueAt(table.getSelectedRow(), 0).toString());
+			           codeTextArea.setText(codeModel.getCodeContents());
+			       }
+			   }
+			});
+			*/
+		
 	}
 
 }
